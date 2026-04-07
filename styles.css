@@ -1,0 +1,151 @@
+/* Writer View layout - only active when body class is present. */
+/* @package local_writerview */
+
+/* ===== Layout container ===== */
+body.writerview-active .path-mod-assign #page-content div[role="main"] .mform {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap: 0;
+    align-items: flex-start;
+}
+
+/* ===== Editor region (left) ===== */
+body.writerview-active .writerview-editor-region {
+    flex: 1 1 0%;
+    min-width: 0;
+    order: 1;
+}
+
+/* ===== Sidebar (right) ===== */
+body.writerview-active .writerview-sidebar {
+    flex: 0 0 320px;
+    width: 320px;
+    max-height: calc(100vh - 80px);
+    overflow-y: auto;
+    order: 2;
+    border-inline-start: 1px solid #dee2e6;
+    padding: 1rem;
+    background-color: #f8f9fa;
+    position: sticky;
+    top: 80px;
+    border-radius: 0 0 4px 0;
+}
+
+body.writerview-active .writerview-sidebar.collapsed {
+    flex: 0 0 40px;
+    width: 40px;
+    padding: 0.5rem;
+    overflow: hidden;
+}
+
+body.writerview-active .writerview-sidebar.collapsed .writerview-sidebar-content {
+    display: none;
+}
+
+/* ===== Sidebar toggle button ===== */
+body.writerview-active .writerview-sidebar-toggle {
+    background: none;
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+    cursor: pointer;
+    padding: 4px 8px;
+    font-size: 1.2rem;
+    display: block;
+    margin-bottom: 0.5rem;
+    width: 100%;
+    text-align: center;
+    color: #6c757d;
+    transition: background-color 0.15s ease;
+}
+
+body.writerview-active .writerview-sidebar-toggle:hover {
+    background-color: #e9ecef;
+}
+
+body.writerview-active .writerview-sidebar-toggle:focus {
+    outline: 2px solid #0f6cbf;
+    outline-offset: 2px;
+}
+
+body.writerview-active .writerview-sidebar.collapsed .writerview-sidebar-toggle {
+    margin-bottom: 0;
+}
+
+/* ===== Sidebar sections ===== */
+body.writerview-active .writerview-sidebar-section {
+    margin-bottom: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #dee2e6;
+}
+
+body.writerview-active .writerview-sidebar-section:last-child {
+    border-bottom: none;
+}
+
+body.writerview-active .writerview-sidebar-section h4 {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #6c757d;
+    margin-bottom: 0.5rem;
+}
+
+body.writerview-active .writerview-sidebar-section .section-content {
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: #212529;
+}
+
+/* ===== Word count ===== */
+body.writerview-active .writerview-wordcount-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #0f6cbf;
+}
+
+/* ===== Editor maximization ===== */
+body.writerview-active .writerview-editor-region .tox-tinymce {
+    min-height: calc(100vh - 200px) !important;
+    height: calc(100vh - 200px) !important;
+}
+
+body.writerview-active .writerview-editor-region .tox-tinymce iframe {
+    min-height: calc(100vh - 260px) !important;
+}
+
+/* ===== Hide elements relocated to sidebar ===== */
+body.writerview-active .writerview-hidden-original {
+    display: none !important;
+}
+
+/* ===== Constrain embedded media in sidebar ===== */
+body.writerview-active .writerview-sidebar-section .section-content img,
+body.writerview-active .writerview-sidebar-section .section-content video,
+body.writerview-active .writerview-sidebar-section .section-content iframe {
+    max-width: 100%;
+    height: auto;
+}
+
+/* ===== Form action buttons ===== */
+body.writerview-active .writerview-editor-region #fgroup_id_submitbutton {
+    margin-top: 1rem;
+}
+
+/* ===== Responsive: collapse sidebar on small screens ===== */
+@media (max-width: 768px) {
+    body.writerview-active .path-mod-assign #page-content div[role="main"] .mform {
+        flex-direction: column;
+    }
+
+    body.writerview-active .writerview-sidebar {
+        flex: 0 0 auto;
+        width: 100%;
+        max-height: 300px;
+        position: static;
+        border-inline-start: none;
+        border-top: 1px solid #dee2e6;
+        order: 3;
+    }
+}
