@@ -32,6 +32,7 @@ $string['sidebar_studentinfo'] = 'Student Information';
 $string['sidebar_description'] = 'Assignment Description';
 $string['sidebar_status'] = 'Submission Status';
 $string['sidebar_wordcount'] = 'Word Count';
+$string['sidebar_rubric'] = 'Rubric';
 $string['sidebar_toggle'] = 'Toggle sidebar';
 $string['wordcount_label'] = 'Words: {$a}';
 $string['privacy:metadata'] = 'The Writer View plugin does not store any personal data. It stores per-assignment configuration only.';

@@ -15,10 +15,46 @@ body.writerview-active #page-content #region-main {
 body.writerview-active .editsubmissionform {
     max-width: none !important;
     width: 100% !important;
+    padding: 0 !important;
 }
 
 body.writerview-active .editsubmissionform .mform {
     max-width: none !important;
+}
+
+/* ===== Condense page header ===== */
+body.writerview-active #page-header {
+    padding-top: 0.25rem !important;
+    padding-bottom: 0.25rem !important;
+    margin-bottom: 0 !important;
+}
+
+body.writerview-active #page-header .page-context-header {
+    margin-bottom: 0.25rem !important;
+}
+
+body.writerview-active #page-header .page-context-header .page-header-headings h1 {
+    font-size: 1.1rem !important;
+    margin-bottom: 0 !important;
+}
+
+body.writerview-active #page-header .page-header-image {
+    display: none !important;
+}
+
+body.writerview-active #page-header .breadcrumb {
+    font-size: 0.8rem;
+    margin-bottom: 0.25rem;
+}
+
+/* Condense activity header area */
+body.writerview-active .activity-header {
+    margin-bottom: 0 !important;
+    padding-bottom: 0 !important;
+}
+
+body.writerview-active .activity-header .activity-information {
+    margin-bottom: 0.25rem !important;
 }
 
 /* ===== Layout container ===== */
@@ -27,7 +63,7 @@ body.writerview-active .mform {
     flex-direction: row !important;
     flex-wrap: nowrap !important;
     gap: 0;
-    align-items: flex-start;
+    align-items: stretch;
 }
 
 /* ===== Editor region (left) ===== */
@@ -35,6 +71,8 @@ body.writerview-active .writerview-editor-region {
     flex: 1 1 0%;
     min-width: 0;
     order: 1;
+    display: flex;
+    flex-direction: column;
 }
 
 /* Override Bootstrap grid so editor takes full width inside its region */
@@ -47,7 +85,6 @@ body.writerview-active .writerview-editor-region .fitem .col-md-9 {
     max-width: 100% !important;
 }
 
-/* Also override the fieldset label row for the button group */
 body.writerview-active .writerview-editor-region #fgroup_id_buttonar .col-md-3 {
     display: none !important;
 }
@@ -57,50 +94,83 @@ body.writerview-active .writerview-editor-region #fgroup_id_buttonar .col-md-9 {
     max-width: 100% !important;
 }
 
+/* ===== Google Docs-style editor max-width ===== */
+body.writerview-active .writerview-editor-region .tox-tinymce {
+    max-width: 816px;
+    margin: 0 auto;
+    border: 1px solid #c4c7c5 !important;
+    border-radius: 0 0 4px 4px !important;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+/* Center the toolbar too */
+body.writerview-active .writerview-editor-region .tox .tox-editor-header {
+    max-width: 816px;
+    margin: 0 auto;
+}
+
 /* ===== Sidebar (right) ===== */
 body.writerview-active .writerview-sidebar {
-    flex: 0 0 320px;
-    width: 320px;
-    max-height: calc(100vh - 80px);
+    flex: 0 0 300px;
+    width: 300px;
+    height: calc(100vh - 60px);
     overflow-y: auto;
     order: 2;
     border-inline-start: 1px solid #dee2e6;
-    padding: 1rem;
+    padding: 0;
     background-color: #f8f9fa;
     position: sticky;
-    top: 80px;
-    border-radius: 0 0 4px 0;
+    top: 60px;
+}
+
+/* Sidebar header with toggle */
+body.writerview-active .writerview-sidebar-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid #dee2e6;
+    background-color: #f8f9fa;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+}
+
+body.writerview-active .writerview-sidebar-header h3 {
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin: 0;
+    color: #495057;
 }
 
 body.writerview-active .writerview-sidebar.collapsed {
     flex: 0 0 40px;
     width: 40px;
-    padding: 0.5rem;
     overflow: hidden;
 }
 
-body.writerview-active .writerview-sidebar.collapsed .writerview-sidebar-content {
+body.writerview-active .writerview-sidebar.collapsed .writerview-sidebar-content,
+body.writerview-active .writerview-sidebar.collapsed .writerview-sidebar-header h3 {
     display: none;
 }
 
 /* ===== Sidebar toggle button ===== */
 body.writerview-active .writerview-sidebar-toggle {
     background: none;
-    border: 1px solid #dee2e6;
-    border-radius: 4px;
+    border: none;
     cursor: pointer;
     padding: 4px 8px;
-    font-size: 1.2rem;
-    display: block;
-    margin-bottom: 0.5rem;
-    width: 100%;
-    text-align: center;
+    font-size: 1rem;
     color: #6c757d;
-    transition: background-color 0.15s ease;
+    border-radius: 4px;
+    transition: background-color 0.15s ease, color 0.15s ease;
+    line-height: 1;
+    flex-shrink: 0;
 }
 
 body.writerview-active .writerview-sidebar-toggle:hover {
     background-color: #e9ecef;
+    color: #495057;
 }
 
 body.writerview-active .writerview-sidebar-toggle:focus {
@@ -109,50 +179,58 @@ body.writerview-active .writerview-sidebar-toggle:focus {
 }
 
 body.writerview-active .writerview-sidebar.collapsed .writerview-sidebar-toggle {
-    margin-bottom: 0;
+    margin: 0.5rem auto;
+    display: block;
+}
+
+/* ===== Sidebar content ===== */
+body.writerview-active .writerview-sidebar-content {
+    padding: 1rem;
 }
 
 /* ===== Sidebar sections ===== */
 body.writerview-active .writerview-sidebar-section {
     margin-bottom: 1rem;
     padding-bottom: 1rem;
-    border-bottom: 1px solid #dee2e6;
+    border-bottom: 1px solid #e9ecef;
 }
 
 body.writerview-active .writerview-sidebar-section:last-child {
     border-bottom: none;
+    margin-bottom: 0;
 }
 
 body.writerview-active .writerview-sidebar-section h4 {
-    font-size: 0.75rem;
-    font-weight: 600;
+    font-size: 0.7rem;
+    font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 0.05em;
-    color: #6c757d;
-    margin-bottom: 0.5rem;
+    letter-spacing: 0.08em;
+    color: #868e96;
+    margin-bottom: 0.4rem;
 }
 
 body.writerview-active .writerview-sidebar-section .section-content {
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     line-height: 1.5;
-    color: #212529;
+    color: #343a40;
 }
 
 /* ===== Word count ===== */
 body.writerview-active .writerview-wordcount-value {
-    font-size: 1.5rem;
+    font-size: 1.75rem;
     font-weight: 700;
     color: #0f6cbf;
+    line-height: 1.2;
 }
 
-/* ===== Editor maximization ===== */
+/* ===== Editor height - fill viewport ===== */
 body.writerview-active .writerview-editor-region .tox-tinymce {
-    min-height: calc(100vh - 200px) !important;
-    height: calc(100vh - 200px) !important;
+    min-height: calc(100vh - 180px) !important;
+    height: calc(100vh - 180px) !important;
 }
 
 body.writerview-active .writerview-editor-region .tox-tinymce iframe {
-    min-height: calc(100vh - 260px) !important;
+    min-height: calc(100vh - 240px) !important;
 }
 
 /* ===== Hide elements relocated to sidebar ===== */
@@ -165,6 +243,25 @@ body.writerview-active .writerview-editor-region #id_submissionheader > .d-flex.
     display: none !important;
 }
 
+/* ===== Rubric in sidebar ===== */
+body.writerview-active .writerview-rubric {
+    overflow-x: auto;
+}
+
+body.writerview-active .writerview-rubric table {
+    font-size: 0.75rem;
+    width: 100%;
+}
+
+body.writerview-active .writerview-rubric .gradingform_rubric .criterion .description {
+    font-size: 0.75rem;
+}
+
+body.writerview-active .writerview-rubric .gradingform_rubric .criterion .level {
+    font-size: 0.7rem;
+    padding: 4px;
+}
+
 /* ===== Constrain embedded media in sidebar ===== */
 body.writerview-active .writerview-sidebar-section .section-content img,
 body.writerview-active .writerview-sidebar-section .section-content video,
@@ -173,9 +270,10 @@ body.writerview-active .writerview-sidebar-section .section-content iframe {
     height: auto;
 }
 
-/* ===== Form action buttons ===== */
+/* ===== Form action buttons - float above editor ===== */
 body.writerview-active .writerview-editor-region #fgroup_id_buttonar {
-    margin-top: 1rem;
+    margin-top: 0.75rem;
+    text-align: center;
 }
 
 /* ===== Responsive: collapse sidebar on small screens ===== */
@@ -187,6 +285,7 @@ body.writerview-active .writerview-editor-region #fgroup_id_buttonar {
     body.writerview-active .writerview-sidebar {
         flex: 0 0 auto;
         width: 100%;
+        height: auto;
         max-height: 300px;
         position: static;
         border-inline-start: none;

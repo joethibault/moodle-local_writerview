@@ -123,19 +123,35 @@ define([], function() {
         sidebar.setAttribute('role', 'complementary');
         sidebar.setAttribute('aria-label', config.strings.togglesidebar);
 
-        // Toggle button.
+        // Sidebar header with title and toggle.
+        const header = document.createElement('div');
+        header.className = 'writerview-sidebar-header';
+
+        const headerTitle = document.createElement('h3');
+        headerTitle.textContent = config.assignmentName;
+        header.appendChild(headerTitle);
+
         const toggleBtn = document.createElement('button');
         toggleBtn.className = 'writerview-sidebar-toggle';
         toggleBtn.type = 'button';
         toggleBtn.setAttribute('aria-label', config.strings.togglesidebar);
         toggleBtn.setAttribute('aria-expanded', 'true');
-        toggleBtn.textContent = '\u00BB';
+        toggleBtn.innerHTML = '<svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">' +
+            '<path d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>' +
+            '</svg>';
         toggleBtn.addEventListener('click', function() {
             const isCollapsed = sidebar.classList.toggle('collapsed');
-            toggleBtn.textContent = isCollapsed ? '\u00AB' : '\u00BB';
+            toggleBtn.innerHTML = isCollapsed
+                ? '<svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">' +
+                  '<path d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>' +
+                  '</svg>'
+                : '<svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">' +
+                  '<path d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>' +
+                  '</svg>';
             toggleBtn.setAttribute('aria-expanded', String(!isCollapsed));
         });
-        sidebar.appendChild(toggleBtn);
+        header.appendChild(toggleBtn);
+        sidebar.appendChild(header);
 
         // Scrollable content wrapper.
         const contentWrapper = document.createElement('div');
@@ -156,7 +172,15 @@ define([], function() {
             buildSection(config.strings.status, formatStatus(config.submissionStatus))
         );
 
-        // Section 4: Word Count.
+        // Section 4: Rubric (if available).
+        if (config.rubricHtml) {
+            const rubricSection = buildSection(config.strings.rubric, '');
+            rubricSection.querySelector('.section-content').innerHTML = config.rubricHtml;
+            rubricSection.querySelector('.section-content').classList.add('writerview-rubric');
+            contentWrapper.appendChild(rubricSection);
+        }
+
+        // Section 5: Word Count.
         const wcSection = buildSection(config.strings.wordcount, '');
         const wcValue = document.createElement('span');
         wcValue.className = 'writerview-wordcount-value';

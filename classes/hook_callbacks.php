@@ -80,17 +80,29 @@ class hook_callbacks {
         ]);
         $statustext = $submission ? $submission->status : 'new';
 
+        // Fetch rubric preview if advanced grading is active.
+        $rubrichtml = '';
+        $gradingmanager = get_grading_manager($context, 'mod_assign', 'submissions');
+        if ($gradingmanager) {
+            $controller = $gradingmanager->get_active_controller();
+            if ($controller) {
+                $rubrichtml = $controller->render_preview($PAGE);
+            }
+        }
+
         $jsconfig = [
             'cmid' => $cmid,
             'studentName' => $userfullname,
             'description' => $description,
             'assignmentName' => format_string($assign->name, true, ['context' => $context]),
             'submissionStatus' => $statustext,
+            'rubricHtml' => $rubrichtml,
             'strings' => [
                 'studentinfo' => get_string('sidebar_studentinfo', 'local_writerview'),
                 'description' => get_string('sidebar_description', 'local_writerview'),
                 'status' => get_string('sidebar_status', 'local_writerview'),
                 'wordcount' => get_string('sidebar_wordcount', 'local_writerview'),
+                'rubric' => get_string('sidebar_rubric', 'local_writerview'),
                 'togglesidebar' => get_string('sidebar_toggle', 'local_writerview'),
             ],
         ];
