@@ -49,6 +49,7 @@ define([], function() {
      * Main setup routine.
      */
     function setup() {
+        document.body.classList.add('writerview-active');
         waitForEditor(function(editorContainer) {
             rearrangeDOM(editorContainer);
             startWordCount();

@@ -100,7 +100,5 @@ class hook_callbacks {
             'init',
             [$jsconfig]
         );
-
-        $PAGE->add_body_class('writerview-active');
     }
 }

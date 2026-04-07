@@ -1,11 +1,31 @@
 /* Writer View layout - only active when body class is present. */
 /* @package local_writerview */
 
+/* ===== Remove Boost limitedwidth constraint ===== */
+body.writerview-active.limitedwidth #page.drawers .main-inner {
+    max-width: none !important;
+}
+
+body.writerview-active #page-content #region-main-box,
+body.writerview-active #page-content #region-main {
+    max-width: none !important;
+}
+
+/* Remove width constraints from the form wrapper */
+body.writerview-active .editsubmissionform {
+    max-width: none !important;
+    width: 100% !important;
+}
+
+body.writerview-active .editsubmissionform .mform {
+    max-width: none !important;
+}
+
 /* ===== Layout container ===== */
-body.writerview-active .path-mod-assign #page-content div[role="main"] .mform {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
+body.writerview-active .mform {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
     gap: 0;
     align-items: flex-start;
 }
@@ -15,6 +35,26 @@ body.writerview-active .writerview-editor-region {
     flex: 1 1 0%;
     min-width: 0;
     order: 1;
+}
+
+/* Override Bootstrap grid so editor takes full width inside its region */
+body.writerview-active .writerview-editor-region .fitem .col-md-3 {
+    display: none !important;
+}
+
+body.writerview-active .writerview-editor-region .fitem .col-md-9 {
+    flex: 0 0 100% !important;
+    max-width: 100% !important;
+}
+
+/* Also override the fieldset label row for the button group */
+body.writerview-active .writerview-editor-region #fgroup_id_buttonar .col-md-3 {
+    display: none !important;
+}
+
+body.writerview-active .writerview-editor-region #fgroup_id_buttonar .col-md-9 {
+    flex: 0 0 100% !important;
+    max-width: 100% !important;
 }
 
 /* ===== Sidebar (right) ===== */
@@ -120,6 +160,11 @@ body.writerview-active .writerview-hidden-original {
     display: none !important;
 }
 
+/* ===== Hide the "Add submission" fieldset legend/toggle header ===== */
+body.writerview-active .writerview-editor-region #id_submissionheader > .d-flex.align-items-center {
+    display: none !important;
+}
+
 /* ===== Constrain embedded media in sidebar ===== */
 body.writerview-active .writerview-sidebar-section .section-content img,
 body.writerview-active .writerview-sidebar-section .section-content video,
@@ -129,14 +174,14 @@ body.writerview-active .writerview-sidebar-section .section-content iframe {
 }
 
 /* ===== Form action buttons ===== */
-body.writerview-active .writerview-editor-region #fgroup_id_submitbutton {
+body.writerview-active .writerview-editor-region #fgroup_id_buttonar {
     margin-top: 1rem;
 }
 
 /* ===== Responsive: collapse sidebar on small screens ===== */
 @media (max-width: 768px) {
-    body.writerview-active .path-mod-assign #page-content div[role="main"] .mform {
-        flex-direction: column;
+    body.writerview-active .mform {
+        flex-direction: column !important;
     }
 
     body.writerview-active .writerview-sidebar {
