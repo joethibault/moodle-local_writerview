@@ -57,45 +57,45 @@ body.writerview-active .activity-header .activity-information {
     margin-bottom: 0.25rem !important;
 }
 
-/* ===== Layout container ===== */
-body.writerview-active .mform {
-    display: flex !important;
-    flex-direction: row !important;
-    flex-wrap: nowrap !important;
-    gap: 0;
-    align-items: stretch;
-}
-
-/* ===== Editor region (left) ===== */
-body.writerview-active .writerview-editor-region {
-    flex: 1 1 0%;
-    min-width: 0;
-    order: 1;
-    display: flex;
-    flex-direction: column;
-}
-
-/* Override Bootstrap grid so editor takes full width inside its region */
-body.writerview-active .writerview-editor-region .fitem .col-md-3 {
+/* Hide the completion badge — status is shown in sidebar */
+body.writerview-active .activity-header .completion-info {
     display: none !important;
 }
 
-body.writerview-active .writerview-editor-region .fitem .col-md-9 {
+/* ===== Layout container — CSS Grid ===== */
+body.writerview-active .mform {
+    display: grid !important;
+    grid-template-columns: 1fr 320px;
+    grid-template-rows: auto;
+    min-height: calc(100vh - 140px);
+}
+
+/* All original form children go in the left column */
+body.writerview-active .mform > .writerview-editor-child {
+    grid-column: 1;
+}
+
+/* ===== Editor form items — full width ===== */
+body.writerview-active .mform .fitem .col-md-3 {
+    display: none !important;
+}
+
+body.writerview-active .mform .fitem .col-md-9 {
     flex: 0 0 100% !important;
     max-width: 100% !important;
 }
 
-body.writerview-active .writerview-editor-region #fgroup_id_buttonar .col-md-3 {
+body.writerview-active .mform #fgroup_id_buttonar .col-md-3 {
     display: none !important;
 }
 
-body.writerview-active .writerview-editor-region #fgroup_id_buttonar .col-md-9 {
+body.writerview-active .mform #fgroup_id_buttonar .col-md-9 {
     flex: 0 0 100% !important;
     max-width: 100% !important;
 }
 
 /* ===== Google Docs-style editor max-width ===== */
-body.writerview-active .writerview-editor-region .tox-tinymce {
+body.writerview-active .mform .tox-tinymce {
     max-width: 816px;
     margin: 0 auto;
     border: 1px solid #c4c7c5 !important;
@@ -103,19 +103,18 @@ body.writerview-active .writerview-editor-region .tox-tinymce {
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
 }
 
-/* Center the toolbar too */
-body.writerview-active .writerview-editor-region .tox .tox-editor-header {
+body.writerview-active .mform .tox .tox-editor-header {
     max-width: 816px;
     margin: 0 auto;
 }
 
-/* ===== Sidebar (right) ===== */
+/* ===== Sidebar (right column) ===== */
 body.writerview-active .writerview-sidebar {
-    flex: 0 0 300px;
-    width: 300px;
+    grid-column: 2;
+    grid-row: 1 / -1;
+    width: 320px;
     height: calc(100vh - 60px);
     overflow-y: auto;
-    order: 2;
     border-inline-start: 1px solid #dee2e6;
     padding: 0;
     background-color: #f8f9fa;
@@ -141,10 +140,14 @@ body.writerview-active .writerview-sidebar-header h3 {
     font-weight: 600;
     margin: 0;
     color: #495057;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 240px;
 }
 
 body.writerview-active .writerview-sidebar.collapsed {
-    flex: 0 0 40px;
+    grid-column: 2;
     width: 40px;
     overflow: hidden;
 }
@@ -152,6 +155,11 @@ body.writerview-active .writerview-sidebar.collapsed {
 body.writerview-active .writerview-sidebar.collapsed .writerview-sidebar-content,
 body.writerview-active .writerview-sidebar.collapsed .writerview-sidebar-header h3 {
     display: none;
+}
+
+/* When collapsed, adjust grid to give editor more space */
+body.writerview-active .mform:has(.writerview-sidebar.collapsed) {
+    grid-template-columns: 1fr 40px;
 }
 
 /* ===== Sidebar toggle button ===== */
@@ -223,13 +231,33 @@ body.writerview-active .writerview-wordcount-value {
     line-height: 1.2;
 }
 
-/* ===== Editor height - fill viewport ===== */
-body.writerview-active .writerview-editor-region .tox-tinymce {
+/* ===== Rubric in sidebar ===== */
+body.writerview-active .writerview-rubric {
+    overflow-x: auto;
+    margin-inline: -0.5rem;
+}
+
+body.writerview-active .writerview-rubric table {
+    font-size: 0.7rem;
+    width: 100%;
+    table-layout: fixed;
+}
+
+body.writerview-active .writerview-rubric .gradingform_rubric .criterion .description,
+body.writerview-active .writerview-rubric .gradingform_rubric .criterion .level {
+    font-size: 0.7rem;
+    padding: 4px;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+/* ===== Editor height — fill viewport ===== */
+body.writerview-active .mform .tox-tinymce {
     min-height: calc(100vh - 180px) !important;
     height: calc(100vh - 180px) !important;
 }
 
-body.writerview-active .writerview-editor-region .tox-tinymce iframe {
+body.writerview-active .mform .tox-tinymce iframe {
     min-height: calc(100vh - 240px) !important;
 }
 
@@ -239,27 +267,8 @@ body.writerview-active .writerview-hidden-original {
 }
 
 /* ===== Hide the "Add submission" fieldset legend/toggle header ===== */
-body.writerview-active .writerview-editor-region #id_submissionheader > .d-flex.align-items-center {
+body.writerview-active .mform #id_submissionheader > .d-flex.align-items-center {
     display: none !important;
-}
-
-/* ===== Rubric in sidebar ===== */
-body.writerview-active .writerview-rubric {
-    overflow-x: auto;
-}
-
-body.writerview-active .writerview-rubric table {
-    font-size: 0.75rem;
-    width: 100%;
-}
-
-body.writerview-active .writerview-rubric .gradingform_rubric .criterion .description {
-    font-size: 0.75rem;
-}
-
-body.writerview-active .writerview-rubric .gradingform_rubric .criterion .level {
-    font-size: 0.7rem;
-    padding: 4px;
 }
 
 /* ===== Constrain embedded media in sidebar ===== */
@@ -270,26 +279,26 @@ body.writerview-active .writerview-sidebar-section .section-content iframe {
     height: auto;
 }
 
-/* ===== Form action buttons - float above editor ===== */
-body.writerview-active .writerview-editor-region #fgroup_id_buttonar {
+/* ===== Form action buttons ===== */
+body.writerview-active .mform #fgroup_id_buttonar {
     margin-top: 0.75rem;
     text-align: center;
 }
 
-/* ===== Responsive: collapse sidebar on small screens ===== */
+/* ===== Responsive: stack on small screens ===== */
 @media (max-width: 768px) {
     body.writerview-active .mform {
-        flex-direction: column !important;
+        grid-template-columns: 1fr !important;
     }
 
     body.writerview-active .writerview-sidebar {
-        flex: 0 0 auto;
+        grid-column: 1;
+        grid-row: auto;
         width: 100%;
         height: auto;
         max-height: 300px;
         position: static;
         border-inline-start: none;
         border-top: 1px solid #dee2e6;
-        order: 3;
     }
 }

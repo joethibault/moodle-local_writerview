@@ -91,21 +91,17 @@ define([], function() {
             return;
         }
 
-        // Create the editor region wrapper.
-        const editorRegion = document.createElement('div');
-        editorRegion.className = 'writerview-editor-region';
-
-        // Move all existing form children into the editor region.
-        const children = Array.from(form.children);
-        children.forEach(function(child) {
-            editorRegion.appendChild(child);
+        // Tag existing form children as the editor region via CSS class.
+        // DO NOT move them — moving TinyMCE's iframe breaks its event bindings.
+        Array.from(form.children).forEach(function(child) {
+            if (child.nodeType === 1) {
+                child.classList.add('writerview-editor-child');
+            }
         });
 
-        // Build the sidebar.
+        // Build the sidebar and append it to the form.
+        // CSS grid handles the two-column layout without moving elements.
         const sidebar = buildSidebar();
-
-        // Append both regions to the form.
-        form.appendChild(editorRegion);
         form.appendChild(sidebar);
 
         // Hide the original assignment description on the page.
