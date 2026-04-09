@@ -73,7 +73,15 @@ define([], function() {
             }
         });
 
-        form.appendChild(buildSidebar());
+        var sidebarResult = buildSidebar();
+        form.appendChild(sidebarResult.sidebar);
+
+        // Place toggle button outside the sidebar so it stays visible when collapsed.
+        var toggleWrapper = el('div', 'wv-toggle-wrapper writerview-editor-child');
+        toggleWrapper.appendChild(sidebarResult.toggleBtn);
+        // Insert before the sidebar (which is the last child).
+        form.insertBefore(toggleWrapper, sidebarResult.sidebar);
+
         hideOriginalDescription();
     }
 
@@ -84,10 +92,6 @@ define([], function() {
         sidebar.className = 'writerview-sidebar';
         sidebar.setAttribute('role', 'complementary');
         sidebar.setAttribute('aria-label', config.strings.arialabel);
-
-        // Show/Hide details toggle at top.
-        var toggleBar = document.createElement('div');
-        toggleBar.className = 'wv-toggle-bar';
 
         var toggleBtn = document.createElement('button');
         toggleBtn.className = 'wv-toggle-btn';
@@ -105,9 +109,6 @@ define([], function() {
                 : config.strings.hidedetails;
             toggleBtn.setAttribute('aria-expanded', String(!isCollapsed));
         });
-
-        toggleBar.appendChild(toggleBtn);
-        sidebar.appendChild(toggleBar);
 
         // Word count — always visible at top.
         bodyEl.appendChild(buildWordCountCard());
@@ -143,7 +144,7 @@ define([], function() {
         }
 
         sidebar.appendChild(bodyEl);
-        return sidebar;
+        return {sidebar: sidebar, toggleBtn: toggleBtn};
     }
 
     // ===================== CARDS =====================

@@ -151,12 +151,11 @@ body.writerview-active .writerview-sidebar {
     transition: width 0.2s ease, padding 0.2s ease;
 }
 
-/* --- Toggle bar --- */
-body.writerview-active .wv-toggle-bar {
-    padding: 0.5rem 0.75rem;
-    border-bottom: 1px solid #e8eaed;
+/* --- Toggle wrapper (lives in editor column, right-aligned) --- */
+body.writerview-active .wv-toggle-wrapper {
     display: flex;
     justify-content: flex-end;
+    padding: 0.35rem 0;
 }
 
 body.writerview-active .wv-toggle-btn {
@@ -168,7 +167,7 @@ body.writerview-active .wv-toggle-btn {
     font-weight: 600;
     color: #5f6368;
     cursor: pointer;
-    transition: background-color 0.15s ease;
+    transition: background-color 0.15s ease, color 0.15s ease;
 }
 
 body.writerview-active .wv-toggle-btn:hover {
@@ -199,26 +198,6 @@ body.writerview-active .writerview-sidebar.collapsed {
 
 body.writerview-active .writerview-sidebar.collapsed .wv-sidebar-body {
     display: none;
-}
-
-body.writerview-active .writerview-sidebar.collapsed .wv-toggle-bar {
-    position: absolute;
-    right: 0;
-    top: 0;
-    border: none;
-    padding: 0.5rem;
-    z-index: 3;
-}
-
-body.writerview-active .writerview-sidebar.collapsed .wv-toggle-btn {
-    background: #1a73e8;
-    color: #fff;
-    border-color: #1a73e8;
-    box-shadow: 0 2px 6px rgba(26, 115, 232, 0.3);
-}
-
-body.writerview-active .writerview-sidebar.collapsed .wv-toggle-btn:hover {
-    background: #1557b0;
 }
 
 body.writerview-active .mform:has(.writerview-sidebar.collapsed) {
