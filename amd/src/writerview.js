@@ -162,8 +162,12 @@ define([], function() {
             bodyEl.appendChild(buildTimeLimitCard(moodleTimer));
         }
 
-        // Static sections (always visible).
-        var statusCard = buildCard(config.strings.status);
+        // Status — compact inline card.
+        var statusCard = el('div', 'wv-card wv-status-card');
+        var statusLabel = el('div', 'wv-card-label');
+        statusLabel.textContent = config.strings.status;
+        statusLabel.style.marginBottom = '0';
+        statusCard.appendChild(statusLabel);
         statusCard.appendChild(buildStatusContent());
         bodyEl.appendChild(statusCard);
 
@@ -189,6 +193,7 @@ define([], function() {
         var card = el('div', 'wv-card wv-wordcount-card');
         var label = el('div', 'wv-card-label');
         label.textContent = config.strings.wordcount;
+        label.style.marginBottom = '0';
         var value = el('div', 'wv-wordcount-value');
         value.id = 'writerview-wordcount';
         value.textContent = '0';
@@ -201,23 +206,14 @@ define([], function() {
         var card = el('div', 'wv-card wv-duedate-card');
         var label = el('div', 'wv-card-label');
         label.textContent = config.strings.duedate;
-
-        var dateStr = el('div', 'wv-duedate-date');
-        var d = new Date(config.dueDate * 1000);
-        dateStr.textContent = d.toLocaleDateString(undefined, {
-            weekday: 'short',
-            month: 'short',
-            day: 'numeric',
-            hour: 'numeric',
-            minute: '2-digit'
-        });
+        label.style.marginBottom = '0';
 
         var timer = el('div', 'wv-duedate-timer');
         timer.id = 'writerview-timer';
         timer.textContent = formatTimeRemaining(config.dueDate);
+        timer.title = new Date(config.dueDate * 1000).toLocaleString();
 
         card.appendChild(label);
-        card.appendChild(dateStr);
         card.appendChild(timer);
         return card;
     }
@@ -226,6 +222,7 @@ define([], function() {
         var card = el('div', 'wv-card wv-timelimit-card');
         var label = el('div', 'wv-card-label');
         label.textContent = config.strings.timelimit;
+        label.style.marginBottom = '0';
 
         var display = el('div', 'wv-timelimit-value');
         display.id = 'writerview-timelimit';

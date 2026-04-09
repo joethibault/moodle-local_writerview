@@ -226,7 +226,8 @@ body.writerview-active .wv-sidebar-body {
 
 /* --- Collapsed state --- */
 body.writerview-active .writerview-sidebar.collapsed {
-    width: 120px;
+    width: auto;
+    min-width: 0;
     overflow: visible;
 }
 
@@ -240,7 +241,7 @@ body.writerview-active .writerview-sidebar.collapsed .wv-toggle-bar {
 }
 
 body.writerview-active .mform:has(.writerview-sidebar.collapsed) {
-    grid-template-columns: 1fr 120px;
+    grid-template-columns: 1fr auto;
 }
 
 /* ================================================================
@@ -269,34 +270,36 @@ body.writerview-active .wv-card-body {
     color: #3c4043;
 }
 
-/* --- Word count card --- */
+/* --- Compact inline cards (word count, due date, time limit, status) --- */
+body.writerview-active .wv-wordcount-card,
+body.writerview-active .wv-duedate-card,
+body.writerview-active .wv-timelimit-card,
+body.writerview-active .wv-status-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.5rem 1rem;
+}
+
 body.writerview-active .wv-wordcount-card {
-    text-align: center;
-    padding: 0.75rem;
     border-color: #d2e3fc;
     background: linear-gradient(135deg, #f8fbff 0%, #fff 100%);
 }
 
 body.writerview-active .wv-wordcount-value {
-    font-size: 2rem;
+    font-size: 1.25rem;
     font-weight: 700;
     color: #1a73e8;
-    line-height: 1.1;
+    line-height: 1;
 }
 
 /* --- Due date card --- */
-body.writerview-active .wv-duedate-card {
-    padding: 0.75rem 1rem;
-}
-
 body.writerview-active .wv-duedate-date {
-    font-size: 0.85rem;
-    color: #3c4043;
-    margin-bottom: 0.2rem;
+    display: none;
 }
 
 body.writerview-active .wv-duedate-timer {
-    font-size: 1.1rem;
+    font-size: 1rem;
     font-weight: 700;
     color: #e37400;
 }
@@ -307,20 +310,18 @@ body.writerview-active .wv-duedate-timer.wv-overdue {
 
 /* --- Time limit card --- */
 body.writerview-active .wv-timelimit-card {
-    padding: 0.75rem 1rem;
     border-color: #fce8e6;
     background: linear-gradient(135deg, #fef7f0 0%, #fff 100%);
-    text-align: center;
 }
 
 body.writerview-active .wv-timelimit-value {
-    font-size: 1.5rem;
+    font-size: 1rem;
     font-weight: 700;
     color: #c5221f;
-    line-height: 1.2;
+    line-height: 1;
 }
 
-/* --- Status badge --- */
+/* --- Status badge (inline in card) --- */
 body.writerview-active .wv-status-badge {
     display: inline-block;
     padding: 3px 10px;
