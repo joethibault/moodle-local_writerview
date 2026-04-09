@@ -73,12 +73,7 @@ define([], function() {
             }
         });
 
-        // Place toggle button above the editor so it's always accessible.
         var sidebarResult = buildSidebar();
-        var toggleWrapper = el('div', 'wv-toggle-wrapper writerview-editor-child');
-        toggleWrapper.appendChild(sidebarResult.toggleBtn);
-        form.insertBefore(toggleWrapper, form.firstChild);
-
         form.appendChild(sidebarResult.sidebar);
 
         hideOriginalDescription();
@@ -109,6 +104,10 @@ define([], function() {
             toggleBtn.setAttribute('aria-expanded', String(!isCollapsed));
         });
 
+        var toggleBar = el('div', 'wv-toggle-bar');
+        toggleBar.appendChild(toggleBtn);
+        sidebar.appendChild(toggleBar);
+
         // Word count — always visible at top.
         bodyEl.appendChild(buildWordCountCard());
 
@@ -137,7 +136,7 @@ define([], function() {
         }
 
         sidebar.appendChild(bodyEl);
-        return {sidebar: sidebar, toggleBtn: toggleBtn};
+        return {sidebar: sidebar};
     }
 
     // ===================== CARDS =====================

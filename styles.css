@@ -151,11 +151,16 @@ body.writerview-active .writerview-sidebar {
     transition: width 0.2s ease, padding 0.2s ease;
 }
 
-/* --- Toggle wrapper (lives in editor column, right-aligned) --- */
-body.writerview-active .wv-toggle-wrapper {
+/* --- Toggle bar (inside sidebar) --- */
+body.writerview-active .wv-toggle-bar {
+    padding: 0.5rem 0.75rem;
+    border-bottom: 1px solid #e8eaed;
     display: flex;
     justify-content: flex-end;
-    padding: 0.35rem 0;
+    position: sticky;
+    top: 0;
+    background: #fff;
+    z-index: 2;
 }
 
 body.writerview-active .wv-toggle-btn {
@@ -189,19 +194,20 @@ body.writerview-active .wv-sidebar-body {
 
 /* --- Collapsed state --- */
 body.writerview-active .writerview-sidebar.collapsed {
-    width: 0;
-    min-width: 0;
-    padding: 0;
-    border-inline-start: none;
-    overflow: hidden;
+    width: 120px;
 }
 
 body.writerview-active .writerview-sidebar.collapsed .wv-sidebar-body {
     display: none;
 }
 
+body.writerview-active .writerview-sidebar.collapsed .wv-toggle-bar {
+    justify-content: center;
+    border-bottom: none;
+}
+
 body.writerview-active .mform:has(.writerview-sidebar.collapsed) {
-    grid-template-columns: 1fr 0px;
+    grid-template-columns: 1fr 120px;
 }
 
 /* ================================================================
