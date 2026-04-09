@@ -21,6 +21,28 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+/* ===== Lock page height — no double scrolling ===== */
+body.writerview-active {
+    overflow: hidden !important;
+    height: 100vh !important;
+}
+
+body.writerview-active #page-wrapper,
+body.writerview-active #page,
+body.writerview-active #topofscroll {
+    overflow: hidden !important;
+    height: 100% !important;
+}
+
+body.writerview-active #page-content {
+    overflow: hidden !important;
+    padding-bottom: 0 !important;
+}
+
+body.writerview-active #page-footer {
+    display: none !important;
+}
+
 /* ===== Remove Boost limitedwidth constraint ===== */
 body.writerview-active.limitedwidth #page.drawers .main-inner {
     max-width: none !important;
@@ -125,12 +147,7 @@ body.writerview-active .mform .tox-tinymce {
     border: 1px solid #dadce0 !important;
     border-radius: 0 0 8px 8px !important;
     box-shadow: 0 1px 3px rgba(60, 64, 67, 0.1);
-    min-height: calc(100vh - 180px) !important;
-    height: calc(100vh - 180px) !important;
-}
-
-body.writerview-active .mform .tox-tinymce iframe {
-    min-height: calc(100vh - 240px) !important;
+    /* Height set dynamically by fitEditorToViewport() */
 }
 
 /* ===== Hide fieldset header & original description ===== */
@@ -166,8 +183,10 @@ body.writerview-active .writerview-sidebar {
 
 /* --- Toggle bar (inside sidebar) --- */
 body.writerview-active .wv-toggle-bar {
-    padding: 0.5rem 0.75rem;
+    padding: 0.4rem 0.75rem;
     display: flex;
+    align-items: center;
+    gap: 0.4rem;
     justify-content: flex-end;
     position: sticky;
     top: 0;

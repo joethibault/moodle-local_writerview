@@ -41,6 +41,7 @@ define([], function() {
         document.body.classList.add('writerview-active');
         waitForEditor(function() {
             rearrangeDOM();
+            fitEditorToViewport();
             startWordCount();
             if (config.dueDate > 0) {
                 startDueDateTimer();
@@ -76,7 +77,39 @@ define([], function() {
         var sidebarResult = buildSidebar();
         form.appendChild(sidebarResult.sidebar);
 
+        // Move Save/Cancel buttons into the sidebar toggle bar.
+        var buttonGroup = form.querySelector('#fgroup_id_buttonar');
+        if (buttonGroup && sidebarResult.toggleBar) {
+            var buttons = buttonGroup.querySelectorAll('.btn');
+            buttons.forEach(function(btn) {
+                btn.classList.add('btn-sm');
+                sidebarResult.toggleBar.insertBefore(btn, sidebarResult.toggleBar.firstChild);
+            });
+            buttonGroup.classList.add('writerview-hidden-original');
+        }
+
         hideOriginalDescription();
+    }
+
+    // ===================== FIT EDITOR =====================
+
+    function fitEditorToViewport() {
+        var tinyEl = document.querySelector('.tox-tinymce');
+        if (!tinyEl) {
+            return;
+        }
+
+        function resize() {
+            var rect = tinyEl.getBoundingClientRect();
+            var available = window.innerHeight - rect.top - 8;
+            if (available > 200) {
+                tinyEl.style.height = available + 'px';
+                tinyEl.style.minHeight = available + 'px';
+            }
+        }
+
+        resize();
+        window.addEventListener('resize', resize);
     }
 
     // ===================== SIDEBAR =====================
@@ -140,7 +173,7 @@ define([], function() {
         }
 
         sidebar.appendChild(bodyEl);
-        return {sidebar: sidebar};
+        return {sidebar: sidebar, toggleBar: toggleBar};
     }
 
     // ===================== CARDS =====================
