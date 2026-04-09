@@ -174,12 +174,14 @@ body.writerview-active .writerview-sidebar {
     grid-row: 1 / -1;
     width: 340px;
     max-height: calc(100vh - 60px);
-    overflow-y: auto;
+    overflow: hidden;
     padding: 0;
     background-color: #fff;
     position: sticky;
     top: 60px;
     transition: width 0.2s ease, padding 0.2s ease;
+    display: flex;
+    flex-direction: column;
 }
 
 /* --- Toggle bar (inside sidebar) --- */
@@ -189,10 +191,10 @@ body.writerview-active .wv-toggle-bar {
     align-items: center;
     gap: 0.4rem;
     justify-content: flex-end;
-    position: sticky;
-    top: 0;
     background: #fff;
     z-index: 2;
+    flex-shrink: 0;
+    border-bottom: 1px solid #f0f0f0;
 }
 
 body.writerview-active .wv-toggle-btn {
@@ -222,6 +224,9 @@ body.writerview-active .wv-sidebar-body {
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
+    overflow-y: auto;
+    flex: 1;
+    min-height: 0;
 }
 
 /* --- Collapsed state --- */
