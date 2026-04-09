@@ -30,6 +30,7 @@ $string['setting_default_enabled'] = 'Enable by default';
 $string['setting_default_enabled_desc'] = 'When checked, Writer View is active for all new assignments unless a teacher explicitly disables it.';
 $string['sidebar_studentinfo'] = 'Student Information';
 $string['sidebar_description'] = 'Assignment Description';
+$string['sidebar_instructions'] = 'Activity Instructions';
 $string['sidebar_status'] = 'Submission Status';
 $string['sidebar_wordcount'] = 'Word Count';
 $string['sidebar_rubric'] = 'Rubric';

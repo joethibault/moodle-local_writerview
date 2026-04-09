@@ -177,6 +177,15 @@ define([], function() {
         descCard.appendChild(descBody);
         bodyEl.appendChild(descCard);
 
+        // Activity instructions (if set by teacher).
+        if (config.instructions) {
+            var instrCard = buildCard(config.strings.instructions);
+            var instrBody = el('div', 'wv-card-body');
+            instrBody.innerHTML = config.instructions;
+            instrCard.appendChild(instrBody);
+            bodyEl.appendChild(instrCard);
+        }
+
         // Rubric — opens as slide-over panel, not inline.
         if (config.rubricHtml) {
             bodyEl.appendChild(buildRubricTrigger());

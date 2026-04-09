@@ -68,7 +68,8 @@ class hook_callbacks {
         // Gather data with a single combined query.
         $cm = get_coursemodule_from_id('assign', $cmid, 0, false, MUST_EXIST);
 
-        $sql = "SELECT a.id, a.name, a.intro, a.introformat, a.duedate,
+        $sql = "SELECT a.id, a.name, a.intro, a.introformat,
+                       a.activity, a.activityformat, a.duedate,
                        s.status AS submissionstatus
                   FROM {assign} a
              LEFT JOIN {assign_submission} s ON s.assignment = a.id
@@ -88,6 +89,16 @@ class hook_callbacks {
 
         $statustext = $record->submissionstatus ?: 'new';
 
+        // Activity instructions (separate from description, shown only on submission page).
+        $instructions = '';
+        if (!empty($record->activity)) {
+            $instructions = format_text(
+                $record->activity,
+                $record->activityformat,
+                ['context' => $context, 'noclean' => false]
+            );
+        }
+
         // Fetch rubric preview if advanced grading is active.
         $rubrichtml = '';
         $gradingmanager = get_grading_manager($context, 'mod_assign', 'submissions');
@@ -103,6 +114,7 @@ class hook_callbacks {
             'cmid' => $cmid,
             'studentName' => fullname($USER),
             'description' => $description,
+            'instructions' => $instructions,
             'assignmentName' => format_string($record->name, true, ['context' => $context]),
             'submissionStatus' => $statustext,
             'dueDate' => (int) $record->duedate,
@@ -110,6 +122,7 @@ class hook_callbacks {
             'strings' => [
                 'studentinfo' => get_string('sidebar_studentinfo', 'local_writerview'),
                 'description' => get_string('sidebar_description', 'local_writerview'),
+                'instructions' => get_string('sidebar_instructions', 'local_writerview'),
                 'status' => get_string('sidebar_status', 'local_writerview'),
                 'wordcount' => get_string('sidebar_wordcount', 'local_writerview'),
                 'rubric' => get_string('sidebar_rubric', 'local_writerview'),
