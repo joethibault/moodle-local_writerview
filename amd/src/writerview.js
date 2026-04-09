@@ -116,18 +116,16 @@ define([], function() {
             bodyEl.appendChild(buildDueDateCard());
         }
 
-        // Collapsible sections.
-        bodyEl.appendChild(buildCollapsibleCard(
-            config.strings.status,
-            buildStatusContent(),
-            true
-        ));
+        // Static sections (always visible).
+        var statusCard = buildCard(config.strings.status);
+        statusCard.appendChild(buildStatusContent());
+        bodyEl.appendChild(statusCard);
 
-        bodyEl.appendChild(buildCollapsibleCard(
-            config.strings.description,
-            buildHtmlContent(config.description),
-            true
-        ));
+        var descCard = buildCard(config.strings.description);
+        var descBody = el('div', 'wv-card-body');
+        descBody.innerHTML = config.description;
+        descCard.appendChild(descBody);
+        bodyEl.appendChild(descCard);
 
         // Rubric — opens as slide-over panel, not inline.
         if (config.rubricHtml) {
@@ -175,6 +173,14 @@ define([], function() {
         card.appendChild(label);
         card.appendChild(dateStr);
         card.appendChild(timer);
+        return card;
+    }
+
+    function buildCard(title) {
+        var card = el('div', 'wv-card');
+        var label = el('div', 'wv-card-label');
+        label.textContent = title;
+        card.appendChild(label);
         return card;
     }
 
