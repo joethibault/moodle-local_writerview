@@ -234,7 +234,7 @@ body.writerview-active .writerview-sidebar .wv-sidebar-body {
     gap: 0.5rem;
     overflow-y: auto !important;
     overflow-x: hidden;
-    max-height: calc(100vh - 110px) !important;
+    /* max-height set dynamically by JS to match editor */
 }
 
 /* --- Collapsed state --- */

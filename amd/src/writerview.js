@@ -99,12 +99,23 @@ define([], function() {
             return;
         }
 
+        var sidebarBody = document.querySelector('.wv-sidebar-body');
+        var toggleBar = document.querySelector('.wv-toggle-bar');
+
         function resize() {
             var rect = tinyEl.getBoundingClientRect();
             var available = window.innerHeight - rect.top - 8;
             if (available > 200) {
                 tinyEl.style.height = available + 'px';
                 tinyEl.style.minHeight = available + 'px';
+            }
+
+            // Match sidebar body height to editor.
+            if (sidebarBody) {
+                var toggleH = toggleBar ? toggleBar.offsetHeight : 0;
+                var sidebarTop = rect.top - toggleH;
+                var sidebarAvailable = window.innerHeight - rect.top - 8;
+                sidebarBody.style.maxHeight = sidebarAvailable + 'px';
             }
         }
 
