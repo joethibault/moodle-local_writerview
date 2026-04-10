@@ -71,8 +71,13 @@ body.writerview-active #page-header {
 }
 
 body.writerview-active #page-header .w-100 {
+    max-width: none;
+    padding-right: 340px;
+}
+
+body.writerview-active #page-header .w-100 > * {
     max-width: 816px;
-    /* margin-left set dynamically by JS to align with editor */
+    margin: 0 auto;
 }
 
 body.writerview-active #page-header .page-context-header {
@@ -222,13 +227,14 @@ body.writerview-active .wv-toggle-btn:focus-visible {
 }
 
 /* --- Sidebar body --- */
-body.writerview-active .wv-sidebar-body {
+body.writerview-active .writerview-sidebar .wv-sidebar-body {
     padding: 0.75rem;
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
-    overflow-y: auto;
-    max-height: calc(100vh - 110px);
+    overflow-y: auto !important;
+    overflow-x: hidden;
+    max-height: calc(100vh - 110px) !important;
 }
 
 /* --- Collapsed state --- */

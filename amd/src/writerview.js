@@ -99,19 +99,12 @@ define([], function() {
             return;
         }
 
-        var headerInner = document.querySelector('#page-header .w-100');
-
         function resize() {
             var rect = tinyEl.getBoundingClientRect();
             var available = window.innerHeight - rect.top - 8;
             if (available > 200) {
                 tinyEl.style.height = available + 'px';
                 tinyEl.style.minHeight = available + 'px';
-            }
-
-            // Align page header content to editor's left edge.
-            if (headerInner) {
-                headerInner.style.marginLeft = rect.left + 'px';
             }
         }
 
