@@ -100,7 +100,6 @@ define([], function() {
         }
 
         var sidebarBody = document.querySelector('.wv-sidebar-body');
-        var headerInner = document.querySelector('#page-header .w-100');
 
         function resize() {
             var rect = tinyEl.getBoundingClientRect();
@@ -119,17 +118,9 @@ define([], function() {
                     sidebarBody.style.maxHeight = sidebarAvailable + 'px';
                 }
             }
-
-            // Align header to editor left edge.
-            if (headerInner) {
-                headerInner.style.paddingLeft = '0';
-                headerInner.style.paddingRight = '0';
-                headerInner.style.marginLeft = rect.left + 'px';
-            }
         }
 
-        // Delay initial resize to let TinyMCE finish centering via margin: auto.
-        setTimeout(resize, 500);
+        resize();
         window.addEventListener('resize', resize);
     }
 

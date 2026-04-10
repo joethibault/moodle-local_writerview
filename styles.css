@@ -72,10 +72,15 @@ body.writerview-active #page-header {
 
 body.writerview-active #page-header.header-maxwidth {
     max-width: none !important;
+    text-align: left !important;
 }
 
 body.writerview-active #page-header .w-100 {
-    /* padding-left set dynamically by JS to match editor left edge */
+    max-width: 816px !important;
+    margin-left: 0 !important;
+    margin-right: auto !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
 }
 
 body.writerview-active #page-header .page-context-header {
