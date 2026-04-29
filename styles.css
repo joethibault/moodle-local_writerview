@@ -197,12 +197,17 @@ body.writerview-active .writerview-sidebar {
     grid-column: 2;
     grid-row: 1 / -1;
     width: 340px;
-    height: calc(100vh - 60px);
+    /* Final max-height set dynamically by fitEditorToViewport() to track the
+       viewport space remaining below the header + any alert banners. The
+       100vh fallback prevents the sidebar from overflowing the viewport on
+       first paint, before JS measures the live banner height. */
+    max-height: 100vh;
     overflow: hidden;
     padding: 0;
     background-color: #fff;
     position: sticky;
-    top: 60px;
+    top: 0;
+    align-self: start;
     display: flex;
     flex-direction: column;
 }

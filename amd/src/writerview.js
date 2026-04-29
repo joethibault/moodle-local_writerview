@@ -114,7 +114,11 @@ define([], function() {
 
     /**
      * Resize the TinyMCE editor and the sidebar body to fit the viewport,
-     * preserving a non-scrolling page layout. Re-runs on window resize.
+     * preserving a non-scrolling page layout. Re-runs on window resize and
+     * whenever content above the editor changes height — e.g. Moodle inserts
+     * a notice banner like the late-submission warning, which would otherwise
+     * push the editor's bottom below the viewport with no way to scroll to it
+     * (#page-content has overflow: hidden by design).
      */
     function fitEditorToViewport() {
         var tinyEl = document.querySelector('.tox-tinymce');
@@ -122,12 +126,30 @@ define([], function() {
             return;
         }
 
+        var sidebar = document.querySelector('.writerview-sidebar');
         var sidebarBody = document.querySelector('.wv-sidebar-body');
+        var rafPending = false;
 
         /**
          * Recompute heights for the editor and sidebar based on viewport.
+         * Coalesced via requestAnimationFrame so observer storms collapse
+         * into a single measurement after layout settles.
          */
         function resize() {
+            if (rafPending) {
+                return;
+            }
+            rafPending = true;
+            window.requestAnimationFrame(function() {
+                rafPending = false;
+                doResize();
+            });
+        }
+
+        /**
+         * Perform the actual size calculation.
+         */
+        function doResize() {
             var rect = tinyEl.getBoundingClientRect();
             var available = window.innerHeight - rect.top - 8;
             if (available > 200) {
@@ -135,19 +157,56 @@ define([], function() {
                 tinyEl.style.minHeight = available + 'px';
             }
 
+            // Size the sidebar wrapper from its live position so it tracks
+            // any banner above it (no hard-coded header offset).
+            if (sidebar) {
+                var sidebarRect = sidebar.getBoundingClientRect();
+                var sidebarAvailable = window.innerHeight - sidebarRect.top - 8;
+                if (sidebarAvailable > 100) {
+                    sidebar.style.maxHeight = sidebarAvailable + 'px';
+                }
+            }
+
             // Match sidebar body bottom to editor bottom.
             if (sidebarBody) {
                 var sbRect = sidebarBody.getBoundingClientRect();
                 var editorBottom = rect.top + available;
-                var sidebarAvailable = editorBottom - sbRect.top;
-                if (sidebarAvailable > 100) {
-                    sidebarBody.style.maxHeight = sidebarAvailable + 'px';
+                var bodyAvailable = editorBottom - sbRect.top;
+                if (bodyAvailable > 100) {
+                    sidebarBody.style.maxHeight = bodyAvailable + 'px';
                 }
             }
         }
 
         resize();
         window.addEventListener('resize', resize);
+
+        // Watch for size changes in regions that sit above the editor: the
+        // page header (collapses, breadcrumbs wrap) and #page-content (alert
+        // banners appear/disappear/wrap to multiple lines).
+        if (typeof ResizeObserver === 'function') {
+            var ro = new ResizeObserver(resize);
+            var header = document.getElementById('page-header');
+            var pageContent = document.getElementById('page-content');
+            if (header) {
+                ro.observe(header);
+            }
+            if (pageContent) {
+                ro.observe(pageContent);
+            }
+        }
+
+        // Watch for nodes inserted above the editor (Moodle's
+        // \core\notification renders into #user-notifications or directly
+        // into #page-content). ResizeObserver alone misses the case where a
+        // banner is added but the parent's box doesn't change synchronously.
+        if (typeof MutationObserver === 'function') {
+            var mo = new MutationObserver(resize);
+            var moTarget = document.getElementById('page-content');
+            if (moTarget) {
+                mo.observe(moTarget, {childList: true, subtree: true});
+            }
+        }
     }
 
     // ===================== SIDEBAR =====================
