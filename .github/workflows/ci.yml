@@ -33,6 +33,10 @@ jobs:
         php: ['8.1', '8.2', '8.3']
         moodle-branch: ['MOODLE_405_STABLE', 'MOODLE_500_STABLE']
         database: [pgsql, mariadb]
+        exclude:
+          # Moodle 5.0 dropped PHP 8.1 support; minimum is PHP 8.2.
+          - php: '8.1'
+            moodle-branch: 'MOODLE_500_STABLE'
 
     steps:
       - name: Check out repository code
